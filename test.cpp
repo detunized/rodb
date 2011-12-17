@@ -219,3 +219,15 @@ BOOST_AUTO_TEST_CASE(nested_arrays)
 	BOOST_CHECK(db.root()[4][0].size() == 1);
 	BOOST_CHECK(db.root()[4][0][0].size() == 1);
 }
+
+BOOST_AUTO_TEST_CASE(dump_yaml)
+{
+	DB(db1, "[[0], [1, 2], [3, 4, 5], [[0]], [[[0]]]]");
+
+	std::ostringstream stream;
+	db1.dump_yaml(stream);
+
+	DB(db2, stream.str().c_str());
+	BOOST_CHECK(db2.root().size() == 5);
+	BOOST_CHECK(db2.root()[4][0][0][0] == 0);
+}
