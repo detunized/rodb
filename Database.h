@@ -49,11 +49,16 @@ public:
 		check_integriry();
 	}
 	
-	void dump(std::ostream &output_stream = std::cout) const
+	void dump(std::ostream &stream = std::cout) const
 	{
-		output_stream << *this;
+		stream << *this;
 	}
-	
+
+	void dump_yaml(std::ostream &stream) const
+	{
+		dump_yaml(stream, root(), 0);
+	}
+
 	Value root() const
 	{
 		return Value(header_ptr() + 1);
@@ -88,6 +93,53 @@ private:
 			throw std::runtime_error("Database integrity check failed");
 	}
 	
+	
+	void dump_yaml(std::ostream &stream, Value const &value, size_t idndet) const
+	{
+		
+		switch (value.type())
+		{
+		case Value::BOOL:
+			stream << ((bool)value ? "true" : "false");
+			break;
+		case Value::INT:
+			stream << (int)value;
+			break;
+		case Value::FLOAT:
+			stream << (float)value;
+			break;
+		case Value::STRING:
+			stream << "\"" << (char const *)value << "\"";
+			break;
+		case Value::ARRAY:
+			{
+				stream << "\n";
+				std::string padding(idndet, ' ');
+				for (size_t i = 0; i < value.size(); ++i)
+				{
+					stream << padding << "- ";
+					dump_yaml(stream, value[i], idndet + 4);
+					stream << "\n";
+				}
+				break;
+			}
+		case Value::MAP:
+			{
+				stream << "\n";
+				std::string padding(idndet, ' ');
+				for (size_t i = 0; i < value.size(); ++i)
+				{
+					stream << padding;
+					dump_yaml(stream, value.keys()[i], idndet);
+					stream << ": ";
+					dump_yaml(stream, value.values()[i], idndet + 4);
+					stream << "\n";
+				}
+				break;
+			}
+		}
+	}
+
 	std::vector<char> data_;
 
 	// Beyond private ;)
