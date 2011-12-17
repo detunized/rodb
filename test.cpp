@@ -193,3 +193,29 @@ BOOST_AUTO_TEST_CASE(strings)
 	BOOST_CHECK(db.root()[3] == "string3");
 	BOOST_CHECK("string3" == db.root()[3]);
 }
+
+BOOST_AUTO_TEST_CASE(nested_arrays)
+{
+	DB(db, "[[0], [1, 2], [3, 4, 5], [[0]], [[[0]]]]");
+
+	BOOST_CHECK(db.root().is_array());
+	BOOST_CHECK(db.root().size() == 5);
+
+	BOOST_CHECK(db.root()[0].is_array());
+	BOOST_CHECK(db.root()[0].size() == 1);
+
+	BOOST_CHECK(db.root()[1].is_array());
+	BOOST_CHECK(db.root()[1].size() == 2);
+
+	BOOST_CHECK(db.root()[2].is_array());
+	BOOST_CHECK(db.root()[2].size() == 3);
+
+	BOOST_CHECK(db.root()[3].is_array());
+	BOOST_CHECK(db.root()[3][0].is_array());
+	BOOST_CHECK(db.root()[3][0].size() == 1);
+
+	BOOST_CHECK(db.root()[4].is_array());
+	BOOST_CHECK(db.root()[4][0].is_array());
+	BOOST_CHECK(db.root()[4][0].size() == 1);
+	BOOST_CHECK(db.root()[4][0][0].size() == 1);
+}
