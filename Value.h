@@ -2,7 +2,7 @@
 #define value_h_included
 
 #ifndef rodb_h_included
-#error Please include "rodb.h", don't include Value.h directly
+#error Please include rodb.h, don't include Value.h directly.
 #endif
 
 #include <iostream>

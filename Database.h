@@ -2,7 +2,7 @@
 #define database_h_included
 
 #ifndef rodb_h_included
-#error Please include "rodb.h", don't include Database.h directly
+#error Please include rodb.h, don't include Database.h directly.
 #endif
 
 #include <fstream>
@@ -96,7 +96,6 @@ private:
 	
 	void dump_yaml(std::ostream &stream, Value const &value, size_t idndet) const
 	{
-		
 		switch (value.type())
 		{
 		case Value::BOOL:
