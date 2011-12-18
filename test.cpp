@@ -151,6 +151,14 @@ BOOST_AUTO_TEST_CASE(map_sorted)
 	BOOST_CHECK(db.root()["key4"] == 4);
 }
 
+BOOST_AUTO_TEST_CASE(map_sorted_equal)
+{
+	DB(db1, "{key4: 4, key0: 0, key2: 2, key1: 1, key3: 3}");
+	DB(db2, "{key0: 0, key1: 1, key2: 2, key3: 3, key4: 4}");
+
+	BOOST_CHECK(db1.root() == db2.root());
+}
+
 BOOST_AUTO_TEST_CASE(numbers)
 {
 	DB(db, "[false, true, 0, 1000, 0x7fffffff, 0xffffffff, 0.0, 100.0, 1000.0, -10000.0]");
