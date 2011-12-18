@@ -64,10 +64,10 @@ BOOST_AUTO_TEST_CASE(create_db)
 
 BOOST_AUTO_TEST_CASE(scalar)
 {
-	DB(db, "0");
+	DB(db, "[0]");
 
-	BOOST_CHECK(db.root().is_scalar());
-	BOOST_CHECK(db.root().size() == 1);
+	BOOST_CHECK(db.root()[0].is_scalar());
+	BOOST_CHECK(db.root()[0].size() == 1);
 }
 
 BOOST_AUTO_TEST_CASE(access_array)
