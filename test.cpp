@@ -250,9 +250,14 @@ BOOST_AUTO_TEST_CASE(dump_yaml)
 
 BOOST_AUTO_TEST_CASE(comparison)
 {
-	DB(db, "[10, 10, [10], [10], [10, 20], [20, 10]]");
+	DB(db, "[10, 10, [10], [10], [10, 20], [20, 10], {a: b, cc: dd}, {cc: dd, a: b}, {a: dd, cc: b}, {cc: dd, a: b}]");
 
 	BOOST_CHECK(db.root()[0] == db.root()[1]);
 	BOOST_CHECK(db.root()[2] == db.root()[3]);
 	BOOST_CHECK(db.root()[4] != db.root()[5]);
+	BOOST_CHECK(db.root()[6] == db.root()[7]);
+	BOOST_CHECK(db.root()[8] != db.root()[9]);
+	BOOST_CHECK(db.root()[0] != db.root()[2]);
+	BOOST_CHECK(db.root()[1] != db.root()[6]);
+	BOOST_CHECK(db.root()[4] != db.root()[9]);
 }
