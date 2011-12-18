@@ -1,5 +1,6 @@
 default: test
 	./test
+	./test.rb
 
 test: test.o
 	g++ -o test -lboost_unit_test_framework-mt test.o
