@@ -247,3 +247,12 @@ BOOST_AUTO_TEST_CASE(dump_yaml)
 	BOOST_CHECK(db2.root().size() == 5);
 	BOOST_CHECK(db2.root()[4][0][0][0] == 0);
 }
+
+BOOST_AUTO_TEST_CASE(comparison)
+{
+	DB(db, "[10, 10, [10], [10], [10, 20], [20, 10]]");
+
+	BOOST_CHECK(db.root()[0] == db.root()[1]);
+	BOOST_CHECK(db.root()[2] == db.root()[3]);
+	BOOST_CHECK(db.root()[4] != db.root()[5]);
+}

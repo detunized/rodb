@@ -223,16 +223,78 @@ template <typename T> inline bool operator ==(T left, Value const &right)
 	return left == (T)right;
 }
 
+template <typename T> inline bool operator !=(Value const &left, T right)
+{
+	return !((T)left == right);
+}
+
+template <typename T> inline bool operator !=(T left, Value const &right)
+{
+	return !(left == (T)right);
+}
+
+// Used in ==(Value, Value)
+bool operator !=(Value const &left, Value const &right);
+
+// Special handling for "Value == Value"
+inline bool operator ==(Value const &left, Value const &right)
+{
+	if (left.type() != right.type())
+		return false;
+
+	switch (left.type())
+	{
+	case Value::BOOL:
+		return (bool)left == (bool)right;
+	
+	case Value::INT:
+		return (int)left == (int)right;
+	
+	case Value::FLOAT:
+		return (float)left == (float)right;
+	
+	case Value::STRING:
+		return strcmp(left, right) == 0;
+	
+	case Value::ARRAY:
+		if (left.size() != right.size())
+			return false;
+		
+		for (size_t i = 0; i < left.size(); ++i)
+			if (left[i] != right[i])
+				return false;
+
+		return true;
+
+	case Value::MAP:
+		if (left.size() != right.size())
+			return false;
+
+		for (size_t i = 0; i < left.size(); ++i)
+			if (left.keys()[i] != right.keys()[i] || left.values()[i] != right.values()[i])
+				return false;
+
+		return true;
+	}
+
+	throw std::runtime_error("The value is corrupted");
+}
+
 // Special handling for "Value == char const *"
-template <> inline bool operator ==(Value const &left, char const *right)
+inline bool operator ==(Value const &left, char const *right)
 {
 	return strcmp(left, right) == 0;
 }
 
 // Special handling for "char const * == Value"
-template <> inline bool operator ==(char const *left, Value const &right)
+inline bool operator ==(char const *left, Value const &right)
 {
 	return strcmp(left, right) == 0;
+}
+
+inline bool operator !=(Value const &left, Value const &right)
+{
+	return !(left == right);
 }
 
 inline std::ostream &operator <<(std::ostream &stream, Value const &value)
