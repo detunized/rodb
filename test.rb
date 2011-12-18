@@ -35,7 +35,7 @@ class TestYaml2Rodb < Test::Unit::TestCase
 	end
 
 	def test_map
-		#assert_compiles "{}" TODO: Make it compile!
+		assert_compiles "{}"
 		assert_compiles "{a: 0}"
 		assert_compiles "{a: 0, b: 1, c: 2, d: 3, e: 4}"
 	end

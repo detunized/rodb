@@ -47,7 +47,7 @@ module Rodb
 			items = value.map { |i| dump_value i }
 			dump_binary 'a', [value.length].pack('V') + offsets(items).pack('V*') + items.join
 		when Hash
-			sorted_keys, sorted_values = value.sort.transpose
+			sorted_keys, sorted_values = value.empty? ? [[], []] : value.sort.transpose
 			keys = dump_value sorted_keys
 			values = dump_value sorted_values
 			dump_binary 'm', [value.length, keys.length].pack('V2') + keys + values
