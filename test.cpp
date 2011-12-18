@@ -261,3 +261,37 @@ BOOST_AUTO_TEST_CASE(comparison)
 	BOOST_CHECK(db.root()[1] != db.root()[6]);
 	BOOST_CHECK(db.root()[4] != db.root()[9]);
 }
+
+BOOST_AUTO_TEST_CASE(direct_database_root_array_access)
+{
+	DB(db, "[0, 1, 2, 3, 4]");
+
+	BOOST_CHECK(db[0] == 0);
+	BOOST_CHECK(db[1] == 1);
+	BOOST_CHECK(db[2] == 2);
+	BOOST_CHECK(db[3] == 3);
+	BOOST_CHECK(db[4] == 4);
+
+	BOOST_CHECK(db[0] == db.root()[0]);
+	BOOST_CHECK(db[1] == db.root()[1]);
+	BOOST_CHECK(db[2] == db.root()[2]);
+	BOOST_CHECK(db[3] == db.root()[3]);
+	BOOST_CHECK(db[4] == db.root()[4]);
+}
+
+BOOST_AUTO_TEST_CASE(direct_database_root_map_access)
+{
+	DB(db, "{key0: 0, key1: 1, key2: 2, key3: 3, key4: 4}");
+	
+	BOOST_CHECK(db["key0"] == 0);
+	BOOST_CHECK(db["key1"] == 1);
+	BOOST_CHECK(db["key2"] == 2);
+	BOOST_CHECK(db["key3"] == 3);
+	BOOST_CHECK(db["key4"] == 4);
+
+	BOOST_CHECK(db["key0"] == db.root()["key0"]);
+	BOOST_CHECK(db["key1"] == db.root()["key1"]);
+	BOOST_CHECK(db["key2"] == db.root()["key2"]);
+	BOOST_CHECK(db["key3"] == db.root()["key3"]);
+	BOOST_CHECK(db["key4"] == db.root()["key4"]);
+}

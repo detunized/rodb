@@ -48,7 +48,22 @@ public:
 		
 		check_integriry();
 	}
-	
+
+	Value operator [](size_t index)
+	{
+		return root()[index];
+	}
+
+	Value operator [](int index)
+	{
+		return root()[index];
+	}
+
+	Value operator [](char const *key)
+	{
+		return root()[key];
+	}
+
 	void dump(std::ostream &stream = std::cout) const
 	{
 		stream << *this;
