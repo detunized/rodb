@@ -47,6 +47,10 @@ module Rodb
 			items = value.map { |i| dump_value i }
 			dump_binary 'a', [value.length].pack('V') + offsets(items).pack('V*') + items.join
 		when Hash
+			if not_a_string = value.keys.any? { |i| !i.is_a? String }
+				raise "Map keys should be strings (#{not_a_string})"
+			end
+
 			sorted_keys, sorted_values = value.empty? ? [[], []] : value.sort.transpose
 			keys = dump_value sorted_keys
 			values = dump_value sorted_values

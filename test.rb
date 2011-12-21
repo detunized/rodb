@@ -14,6 +14,7 @@ class TestYaml2Rodb < Test::Unit::TestCase
 	end
 
 	def test_unsupported_type
+		assert_doesnt_compile nil.to_yaml
 		assert_doesnt_compile [nil].to_yaml
 		assert_doesnt_compile [Time.now].to_yaml
 		assert_doesnt_compile [Object.new].to_yaml
@@ -38,6 +39,12 @@ class TestYaml2Rodb < Test::Unit::TestCase
 		assert_compiles "{}"
 		assert_compiles "{a: 0}"
 		assert_compiles "{a: 0, b: 1, c: 2, d: 3, e: 4}"
+	end
+
+	def test_map_string_keys
+		assert_doesnt_compile "{0: 0}"
+		assert_doesnt_compile "{0: 0, 1: 1, 2: 2}" # all numbers
+		assert_doesnt_compile "{0: 1, c: 2, e: f}" # mixed
 	end
 
 	# Helpers
