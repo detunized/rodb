@@ -135,6 +135,19 @@ BOOST_AUTO_TEST_CASE(access_map)
 	BOOST_REQUIRE_EXCEPTION(db.root()["key5"], std::runtime_error, WhatStartsWith("Key is not in the map"));
 }
 
+BOOST_AUTO_TEST_CASE(empty_map)
+{
+	DB(db, "{}");
+
+	BOOST_CHECK(db.root().size() == 0);
+
+	BOOST_CHECK(!db.root().has_key(""));
+	BOOST_CHECK(!db.root().has_key("key0"));
+
+	BOOST_REQUIRE_EXCEPTION(db.root()[""], std::runtime_error, WhatStartsWith("Key is not in the map"));
+	BOOST_REQUIRE_EXCEPTION(db.root()["key0"], std::runtime_error, WhatStartsWith("Key is not in the map"));
+}
+
 BOOST_AUTO_TEST_CASE(map_sorted)
 {
 	DB(db, "{key4: 4, key0: 0, key2: 2, key1: 1, key3: 3}");
