@@ -45,6 +45,8 @@ public:
 		ARRAY = 'a',
 		MAP = 'm',
 	};
+
+	static size_t const INVALID_INDEX = static_cast<size_t>(-1);
 	
 	Type type() const
 	{
@@ -146,12 +148,7 @@ public:
 	// Map only
 	bool has_key(char const *key) const
 	{
-		Value k = keys();
-		for (size_t i = 0; i < k.size(); ++i)
-			if (strcmp(k[i], key) == 0)
-				return true;
-
-		return false;
+		return key_index(key) != INVALID_INDEX;
 	}
 
 	Value keys() const
@@ -170,12 +167,10 @@ public:
 	{
 		rodb_assert_or_throw(is_map(), "Value is not a map");
 		
-		Value k = keys();
-		for (size_t i = 0; i < k.size(); ++i)
-			if (strcmp(k[i], key) == 0)
-				return values()[i];
+		size_t const index = key_index(key);
+		rodb_assert_or_throw(index != INVALID_INDEX, "Key is not in the map");
 
-		rodb_assert_or_throw(false, "Key is not in the map");
+		return values()[index];
 	}
 
 private:
@@ -204,6 +199,16 @@ private:
 	void const *payload(size_t extra_offset = 0) const
 	{
 		return offset_ptr(header_ptr() + 1, extra_offset);
+	}
+
+	size_t key_index(char const *key) const
+	{
+		Value k = keys();
+		for (size_t i = 0; i < k.size(); ++i)
+			if (strcmp(k[i], key) == 0)
+				return i;
+
+		return INVALID_INDEX;
 	}
 
 	char const *const data_;
