@@ -78,6 +78,12 @@ module Rodb
 	def Rodb.compile(yaml)
 		Compiler.new.compile yaml
 	end
+
+	def Rodb.compile_file(filename)
+		File.open filename do |file|
+			compile file
+		end
+	end
 end
 
 if $0 == __FILE__
