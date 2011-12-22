@@ -203,10 +203,19 @@ private:
 
 	size_t key_index(char const *key) const
 	{
-		Value k = keys();
-		for (size_t i = 0; i < k.size(); ++i)
-			if (strcmp(k[i], key) == 0)
-				return i;
+		size_t left = 0;
+		size_t right = size();
+		while (left < right)
+		{
+			size_t const middle = left + (right - left) / 2;
+			int const cmp = strcmp(key, keys()[middle]);
+			if (cmp < 0)
+				right = middle;
+			else if (cmp > 0)
+				left = middle + 1;
+			else
+				return middle;
+		}
 
 		return INVALID_INDEX;
 	}
