@@ -209,12 +209,14 @@ private:
 		{
 			size_t const middle = left + (right - left) / 2;
 			int const cmp = strcmp(key, keys()[middle]);
+
+			if (cmp == 0)
+				return middle;
+
 			if (cmp < 0)
 				right = middle;
-			else if (cmp > 0)
-				left = middle + 1;
 			else
-				return middle;
+				left = middle + 1;
 		}
 
 		return INVALID_INDEX;
