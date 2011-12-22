@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'yaml2rodb'
-require 'yaml'
+require 'rodb'
 require 'test/unit'
 
 class TestYaml2Rodb < Test::Unit::TestCase
