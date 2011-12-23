@@ -50,8 +50,8 @@ module Rodb
 				items = value.map { |i| dump_value i }
 				dump_binary 'a', [value.length].pack('V') + offsets(items).pack('V*') + items.join
 			when Hash
-				if not_a_string = value.keys.any? { |i| !i.is_a? String }
-					raise "Map keys should be strings (#{not_a_string})"
+				if not_a_string = value.keys.find { |i| !i.is_a? String }
+					raise "Map keys should be strings (key: #{not_a_string}, value: #{value[not_a_string]})" # TODO: Trim key/value when too long
 				end
 
 				sorted_keys, sorted_values = value.empty? ? [[], []] : value.sort.transpose
@@ -59,7 +59,7 @@ module Rodb
 				values = dump_value sorted_values
 				dump_binary 'm', [value.length, keys.length].pack('V2') + keys + values
 			else
-				raise "Unsupported type #{value.class} (value: #{value})"
+				raise "Unsupported type #{value.class} (value: #{value})" # TODO: Trim value when too long
 			end
 		end
 
