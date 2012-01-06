@@ -283,14 +283,7 @@ inline bool operator ==(Value const &left, Value const &right)
 		return true;
 
 	case Value::MAP:
-		if (left.size() != right.size())
-			return false;
-
-		for (size_t i = 0; i < left.size(); ++i)
-			if (left.keys()[i] != right.keys()[i] || left.values()[i] != right.values()[i])
-				return false;
-
-		return true;
+		return left.keys() == right.keys() && left.values() == right.values();
 	}
 
 	throw std::runtime_error("The value is corrupted");
