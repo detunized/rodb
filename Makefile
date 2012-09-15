@@ -9,7 +9,4 @@ test.o: test.cpp rodb.h Value.h Database.h
 	g++ -c -Wall -o test.o test.cpp
 
 clean:
-	rm test
-	rm *.o
-	rm unit_test.rodb
-	rm unit_test.yaml
+	rm -f test test.o unit_test.rodb unit_test.yaml
