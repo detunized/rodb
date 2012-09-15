@@ -8,6 +8,7 @@ TODO:
   - store bools inside the type block
   - store short integers inside the type block
   - store short string inside the type block
+  - STL compatible iterators
   - rewrite compiler in C++ to remove extra dependecies
 
 DONE:
