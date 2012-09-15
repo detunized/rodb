@@ -3,3 +3,5 @@ syntax: glob
 unit_test.rodb
 unit_test.yaml
 test
+rodb.sublime-project
+rodb.sublime-workspace
