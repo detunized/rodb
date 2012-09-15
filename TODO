@@ -1,6 +1,7 @@
 Move things from TODO to DONE once they are done.
 
 TODO:
+  - organized project into proper library with directory structure and everything
   - store size of the elements in the array, not in the elemnt itself
   - ensure 4 byte alignment
   - sort out the exception/assert mess, make sure it's consistent
