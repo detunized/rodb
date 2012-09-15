@@ -5,3 +5,5 @@ unit_test.yaml
 test
 rodb.sublime-project
 rodb.sublime-workspace
+example/example
+example/example.rodb

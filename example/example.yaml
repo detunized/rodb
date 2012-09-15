@@ -1,0 +1,65 @@
+# Game config example
+
+# World properties
+world:
+    layers:
+        - ground
+        - road
+        - cracks
+        - shadows
+        - buildings
+        - cars
+        - objects
+        - objects_cars
+        - effects
+        - trees
+        - bonus
+        - ball
+
+# Ball properties
+ball:
+    # Physics
+    radius: 37.5
+    start_position: {x: 160, y: -50}
+    start_speed: 200
+    min_speed: 0
+    max_speed: 500
+    lateral_speed: 200
+    max_lateral_speed: 200
+    repel_force: 1000
+    wall_restitution: 1
+    wall_elasticity: 50
+    building_restitution: 0.5
+    building_elasticity: 10
+
+    # Trail
+    trail_length: 10 # in particles
+    trail_particle_gap: 70
+    trail_particle_min_scale: 0.5
+    trail_particle_max_scale: 1.0
+
+    # Apperance
+    shadow_offset: {x: 10, y: 10}
+    image: images/sphere/sphere.pvr
+    shadow: images/sphere/sphere_shadow.pvr
+    crack_image: images/sphere/decal_crash_01.pvr
+
+    # Jumping
+    jump_distance: 200
+    jump_peak_scale: 1.2
+    jump_peak_shadow_offset: {x: 20, y: 20}
+
+    # Gameplay
+    points_per_pixel: 0.1
+
+# View properties
+view:
+    ball_bottom_offset: 150
+    shake_duration: 0.25
+    shake_amplitude: 5
+
+# Game settings
+game:
+    start_level: levels/woodbridge.rodb
+    debug: true
+    allowed_levels: [1, 2, levels/woodbridge.rodb, 7, 12, [100, 101, 102]]
